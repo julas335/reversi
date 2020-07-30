@@ -1,0 +1,10 @@
+C:\Users\Julek\Documents\Computer Science\Reverse Game\Reverse Game\bin\Debug\Reverse Game.exe.config
+C:\Users\Julek\Documents\Computer Science\Reverse Game\Reverse Game\bin\Debug\Reverse Game.exe
+C:\Users\Julek\Documents\Computer Science\Reverse Game\Reverse Game\bin\Debug\Reverse Game.pdb
+C:\Users\Julek\Documents\Computer Science\Reverse Game\Reverse Game\bin\Debug\Reverse Game.xml
+C:\Users\Julek\Documents\Computer Science\Reverse Game\Reverse Game\obj\Debug\Reverse Game.vbprojAssemblyReference.cache
+C:\Users\Julek\Documents\Computer Science\Reverse Game\Reverse Game\obj\Debug\Reverse_Game.Resources.resources
+C:\Users\Julek\Documents\Computer Science\Reverse Game\Reverse Game\obj\Debug\Reverse Game.vbproj.GenerateResource.cache
+C:\Users\Julek\Documents\Computer Science\Reverse Game\Reverse Game\obj\Debug\Reverse Game.exe
+C:\Users\Julek\Documents\Computer Science\Reverse Game\Reverse Game\obj\Debug\Reverse Game.xml
+C:\Users\Julek\Documents\Computer Science\Reverse Game\Reverse Game\obj\Debug\Reverse Game.pdb

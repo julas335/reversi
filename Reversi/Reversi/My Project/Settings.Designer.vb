@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
 
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")> _
-        Friend ReadOnly Property Settings() As Global.Reverse_Game.My.MySettings
+        Friend ReadOnly Property Settings() As Global.Reversi.My.MySettings
             Get
-                Return Global.Reverse_Game.My.MySettings.Default
+                Return Global.Reversi.My.MySettings.Default
             End Get
         End Property
     End Module

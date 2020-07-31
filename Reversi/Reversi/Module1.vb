@@ -4,7 +4,20 @@
         Public column As Integer
     End Class
 
-    Function CheckPlayerMove(ByRef Board(,) As Char, ByVal row As Integer, ByVal column As Integer, ByRef items(,) As Integer) As List(Of Field)
+    Sub FlipPieces(ByRef piecesFlipped As List(Of Field), ByRef Board(,) As Char, ByVal colour As Char)
+
+        For Each field In piecesFlipped
+
+            If colour = "W" Then
+                Board(field.row, field.column) = "W"
+            Else
+                Board(field.row, field.column) = "B"
+            End If
+        Next
+
+    End Sub
+
+    Function CheckMove(ByRef Board(,) As Char, ByVal row As Integer, ByVal column As Integer, ByRef items(,) As Integer, ByVal colour As Char) As List(Of Field)
         Dim numToFlip As Integer
         Dim num1, num2 As Integer
         Dim num1Start, num2Start As Integer
@@ -15,38 +28,34 @@
         'check each direction
         For i = 0 To 7
             Try
-                If Board(row + items(0, i), column + items(1, i)) = "B" Then
+                If (Board(row + items(0, i), column + items(1, i)) <> "-") And (Board(row + items(0, i), column + items(1, i)) <> colour) Then
 
                     numToFlip += 1
-                    num1 = items(0, i)
-                    num2 = items(1, i)
+                    num1 = 2 * items(0, i)
+                    num2 = 2 * items(1, i)
                     num1Start = items(0, i)
                     num2Start = items(1, i)
 
+
                     Do
-                        If Board(row + num1, column + num2) = "B" Then
+                        If (Board(row + num1, column + num2)) <> "-" And (Board(row + num1, column + num2) <> colour) Then
                             numToFlip += 1
-                        ElseIf Board(row + num1, column + num2) = "W" Then
+                        ElseIf Board(row + num1, column + num2) = colour Then
                             check = True
                         End If
-
                         num1 += items(0, i)
                         num2 += items(1, i)
-
                     Loop Until (check = True) Or ((row + num1) = 7 Or (row + num1) = 0 Or (column + num2) = 7 Or (column + num2) = 0)
 
                     If check = True Then
+                        For e = 1 To numToFlip
 
-                        For e = 0 To numToFlip - 1
-
-                            Board(row + num1Start, column + num2Start) = "W"
-                            piecesFlipped.Add(New Field With {.row = row + items(0, i),
-                                            .column = column + items(1, i)})
+                            piecesFlipped.Add(New Field With {.row = row + num1Start,
+                                            .column = column + num2Start})
                             num1Start += items(0, i)
                             num2Start += items(1, i)
 
                         Next
-
                     End If
 
                     numToFlip = 0
@@ -89,6 +98,7 @@
         Dim items(1, 7) As Integer
 
 
+
         Do
             Console.WriteLine("Enter row")
             Console.Write("> ")
@@ -100,10 +110,10 @@
 
             CreateDirectionArray(items)
 
-
-            If (CheckPlayerMove(Board, row, column, items)).Count > 0 Then
+            If (CheckMove(Board, row, column, items, "W")).Count > 0 Then
                 Board(row, column) = "W"
-                PrintBoard(Board)
+                FlipPieces(CheckMove(Board, row, column, items, "W"), Board, "W")
+                check = True
             Else
                 Console.WriteLine("That is an invalid move, please try again.")
             End If
@@ -120,7 +130,7 @@
             For column = 0 To 7
                 If (row = 3 And column = 3) Or (row = 4 And column = 4) Then
                     Board(row, column) = "W"
-                ElseIf (row = 3 And column = 4) Or (row = 4 And column = 3) Or (row = 4 And column = 2) Then
+                ElseIf (row = 3 And column = 4) Or (row = 4 And column = 3) Then
                     Board(row, column) = "B"
                 Else
                     Board(row, column) = "-"

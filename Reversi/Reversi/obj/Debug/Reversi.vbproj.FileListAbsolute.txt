@@ -1,0 +1,10 @@
+C:\Users\Julek\Documents\Computer Science\github\reversi\Reversi\Reversi\bin\Debug\Reversi.exe.config
+C:\Users\Julek\Documents\Computer Science\github\reversi\Reversi\Reversi\bin\Debug\Reversi.exe
+C:\Users\Julek\Documents\Computer Science\github\reversi\Reversi\Reversi\bin\Debug\Reversi.pdb
+C:\Users\Julek\Documents\Computer Science\github\reversi\Reversi\Reversi\bin\Debug\Reversi.xml
+C:\Users\Julek\Documents\Computer Science\github\reversi\Reversi\Reversi\obj\Debug\Reversi.vbprojAssemblyReference.cache
+C:\Users\Julek\Documents\Computer Science\github\reversi\Reversi\Reversi\obj\Debug\Reversi.Resources.resources
+C:\Users\Julek\Documents\Computer Science\github\reversi\Reversi\Reversi\obj\Debug\Reversi.vbproj.GenerateResource.cache
+C:\Users\Julek\Documents\Computer Science\github\reversi\Reversi\Reversi\obj\Debug\Reversi.exe
+C:\Users\Julek\Documents\Computer Science\github\reversi\Reversi\Reversi\obj\Debug\Reversi.xml
+C:\Users\Julek\Documents\Computer Science\github\reversi\Reversi\Reversi\obj\Debug\Reversi.pdb

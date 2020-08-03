@@ -14,20 +14,28 @@ Public Class ReversiEngine
 
         Public Board(7, 7) As ReversiPawn
 
-        Public Sub FlipPieces(ByRef piecesFlipped As List(Of ReversiField), ByVal colour As ReversiPawn)
+    Public Sub FlipPieces(ByRef piecesFlipped As List(Of ReversiField), ByVal colour As ReversiPawn, ByRef TestBoard(,) As ReversiPawn, ByVal botCheck As Boolean)
 
+
+        If botCheck = False Then
             For Each Field In piecesFlipped
 
                 If colour = ReversiPawn.white Then
                     Board(Field.row, Field.column) = ReversiPawn.white
+                    TestBoard(Field.row, Field.column) = ReversiPawn.white
                 Else
                     Board(Field.row, Field.column) = ReversiPawn.black
+                    TestBoard(Field.row, Field.column) = ReversiPawn.black
                 End If
             Next
+        Else
+            For Each Field In piecesFlipped
+                TestBoard(Field.row, Field.column) = ReversiPawn.black
+            Next
+        End If
+    End Sub
 
-        End Sub
-
-        Public Function CreateDirectionArray(ByRef items(,) As Integer) As Array
+    Public Function CreateDirectionArray(ByRef items(,) As Integer) As Array
 
             items(0, 0) = 1
             items(0, 1) = 1
@@ -50,20 +58,23 @@ Public Class ReversiEngine
             Return items
         End Function
 
-        Public Function CheckMove(ByVal row As Integer, ByVal column As Integer, ByRef items(,) As Integer, ByVal colour As ReversiPawn) As List(Of ReversiField)
-            Dim numToFlip As Integer
-            Dim num1, num2 As Integer
-            Dim num1Start, num2Start As Integer
-            Dim check As Boolean
-            Dim piecesFlipped As New List(Of ReversiField)
+    Public Function CheckMove(ByVal row As Integer, ByVal column As Integer, ByRef items(,) As Integer, ByVal colour As ReversiPawn) As List(Of ReversiField)
+        Dim numToFlip As Integer
+        Dim num1, num2 As Integer
+        Dim num1Start, num2Start As Integer
+        Dim check As Boolean
+        Dim check2 As Boolean
+        Dim iterations As Integer
+        Dim piecesFlipped As New List(Of ReversiField)
 
 
-            'check each direction
-            For i = 0 To 7
+        'check each direction
+        For i = 0 To 7
             Try
                 If (Board(row + items(0, i), column + items(1, i)) <> ReversiPawn.empty) And (Board(row + items(0, i), column + items(1, i)) <> colour) Then
 
                     numToFlip += 1
+                    iterations += 1
                     num1 = 2 * items(0, i)
                     num2 = 2 * items(1, i)
                     num1Start = items(0, i)
@@ -73,14 +84,17 @@ Public Class ReversiEngine
                     Do
                         If (Board(row + num1, column + num2)) <> ReversiPawn.empty And (Board(row + num1, column + num2) <> colour) Then
                             numToFlip += 1
-                        ElseIf Board(row + num1, column + num2) = colour Then
+                        ElseIf Board(row + num1, column + num2) = ReversiPawn.empty Then
                             check = True
+                        ElseIf Board(row + num1, column + num2) = colour Then
+                            check2 = True
                         End If
                         num1 += items(0, i)
                         num2 += items(1, i)
-                    Loop Until (check = True) Or ((row + num1) = 7 Or (row + num1) = 0 Or (column + num2) = 7 Or (column + num2) = 0)
+                        iterations += 1
+                    Loop Until (check2 = True) Or (check = True) Or (iterations = 7)
 
-                    If check = True Then
+                    If (check2 = True) Then
                         For e = 1 To numToFlip
 
                             piecesFlipped.Add(New ReversiField With {.row = row + num1Start,
@@ -93,40 +107,40 @@ Public Class ReversiEngine
 
                     numToFlip = 0
                     check = False
+                    check2 = False
                 End If
             Catch ex As IndexOutOfRangeException
 
             End Try
 
+        Next
+
+        Return piecesFlipped
+
+        For Each piece In piecesFlipped
+            piecesFlipped.Remove(piece)
+        Next
+    End Function
+
+    Public Sub SetUpBoard()
+
+        Dim row, column As Integer
+
+        For row = 0 To 7
+            For column = 0 To 7
+                If (row = 3 And column = 3) Or (row = 4 And column = 4) Then
+                    Board(row, column) = ReversiPawn.white
+                ElseIf (row = 3 And column = 4) Or (row = 4 And column = 3) Then
+                    Board(row, column) = ReversiPawn.black
+                Else
+                    Board(row, column) = ReversiPawn.empty
+                End If
             Next
+        Next
 
-            Return piecesFlipped
+    End Sub
 
-            For Each piece In piecesFlipped
-                piecesFlipped.Remove(piece)
-            Next
-        End Function
-
-        Public Function SetUpBoard() As Array
-
-            Dim row, column As Integer
-
-            For row = 0 To 7
-                For column = 0 To 7
-                    If (row = 3 And column = 3) Or (row = 4 And column = 4) Then
-                        Board(row, column) = ReversiPawn.white
-                    ElseIf (row = 3 And column = 4) Or (row = 4 And column = 3) Then
-                        Board(row, column) = ReversiPawn.black
-                    Else
-                        Board(row, column) = ReversiPawn.empty
-                    End If
-                Next
-            Next
-
-            Return Board
-        End Function
-
-        Public Sub PrintBoard()
+    Public Sub PrintBoard()
             Dim row, column As Integer
 
             Console.WriteLine()
